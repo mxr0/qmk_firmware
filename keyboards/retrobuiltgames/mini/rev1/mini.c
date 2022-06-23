@@ -2,5 +2,5 @@
  * SPDX-License-Identifier: GPL-2.0+
  */
 
-#include "miniv1.h"
+#include "mini.h"
 

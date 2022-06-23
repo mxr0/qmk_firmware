@@ -12,19 +12,19 @@ enum layer_number {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] =  LAYOUT(
+    [_BASE] =  LAYOUT(
         KC_MUTE, KC_MPLY, KC_MRWD, LT(1,KC_MFFD),
         TG(_MEDIA), C(KC_X), C(KC_C), C(KC_V)
     ),
-    [1] = LAYOUT(
+    [_MEDIA] = LAYOUT(
         KC_MUTE, KC_MPLY, KC_MRWD, LT(1,KC_MFFD),
         TG(_SYS),   KC_A, KC_S, KC_D
     ),
-    [2] = LAYOUT(
+    [_SYS] = LAYOUT(
         _______, _______, _______, _______,
         TG(_MISC), C(KC_X), C(KC_C), C(KC_V)
     ),
-    [3] = LAYOUT(
+    [_MISC] = LAYOUT(
         _______, _______, _______, _______,
         TG(_BASE), _______, _______, _______
     )

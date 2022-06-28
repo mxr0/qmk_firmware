@@ -17,19 +17,20 @@
 #define MATRIX_COLS 4
 
 
-/* mode switch button+analog poti * /
+/* mode switch button+analog poti currently unused * /
 #define DIRECT_PINS { A0, A1 }
 */
+
 /* status LEDS */
-#define LED1 PF5 //A2
-#define LED2 PF4 //A3 
+#define LED1 F5
+#define LED2 F4 
 
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION ROW2COL
 
 /* key matrix pins */
-#define MATRIX_ROW_PINS {D4, C6 }
-#define MATRIX_COL_PINS {D7, E6, B4, B5}
+#define MATRIX_ROW_PINS { D4, C6 }
+#define MATRIX_COL_PINS { D7, E6, B4, B5 }
 
 #define ENCODERS_PAD_A { B2, B1 }
 #define ENCODERS_PAD_B { B6, B3 }

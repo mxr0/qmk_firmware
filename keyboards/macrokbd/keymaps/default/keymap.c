@@ -11,43 +11,38 @@ enum layer_name {
   _MISC
 };
 
-#ifdef LED_ENABLE
-// set LED Pins as output
+// setup LED Pins as output
 void keyboard_pre_init_user(void) {
-    // Set our LED pins as output
-    setPinOutput(A2); //LED1
-    setPinOutput(A3); //LED2
-    writePinHigh(A2);
-    writePinLow(A3);
+    setPinOutput(LED1);
+    setPinOutput(LED2);
 }
 
-/* update the leds when the layer changes */
-uint32_t layer_state_set_user(uint32_t state) {
+/* update the leds with every layer change */
+layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
     case _MEDIA:
-      // set first led
+      writePinLow(LED1);
+      writePinLow(LED2);
+      break;
+    case _BROWSER:
       writePinHigh(LED1);
       writePinLow(LED2);
       break;
     case _SYS:
-      // set secound led
       writePinLow(LED1);
       writePinHigh(LED2);
       break;
     case _MISC:
-      // set both leds
       writePinHigh(LED1);
       writePinHigh(LED2);
       break;
-    default: //  for any other layers, or the default layer
-      // disable both leds
+    default: // default fallback
       writePinLow(LED1);
       writePinLow(LED2);
       break;
     }
     return state;
 }
-#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MEDIA] = LAYOUT(

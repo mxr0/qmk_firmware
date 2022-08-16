@@ -46,7 +46,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MEDIA] = LAYOUT(
-        KC_MUTE, KC_MRWD, KC_MPLY, KC_MFFD,
+        KC_MUTE, KC_LEFT, KC_MPLY, KC_RIGHT,
         TO(_BROWSER), KC_MPRV, KC_MSTP, KC_MNXT
     ),
     [_BROWSER] =  LAYOUT(
@@ -58,8 +58,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TO(_MISC), KC_3, C(KC_C), C(KC_V)
     ),
     [_MISC] = LAYOUT(
-        _______, _______, _______, _______,
-        TO(_MEDIA), KC_4, _______, _______
+        KC_MUTE, A(KC_TAB), KC_MPLY, KC_RIGHT,
+        TO(_MEDIA), KC_ENTER, KC_MSTP, KC_MNXT
     )
 };
 
@@ -71,17 +71,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
 	switch(get_highest_layer(layer_state)){
            case 0: /* _MEDIA*/
-                tap_code(clockwise ? KC_VOLU : KC_VOLD);
+                tap_code(clockwise ? KC_VOLD : KC_VOLU);
                 break;
 	   case 1: /* _BROWSER */
-                tap_code16(clockwise ? C(KC_TAB) : S(C(KC_TAB)));
-		/*
-        	if (clockwise) {
-            	    tap_code16(C(KC_TAB));
-        	} else {
-            	    tap_code16(S(C(KC_TAB)));
-                }
-		*/
+                tap_code16(clockwise ? S(C(KC_TAB)) : C(KC_TAB));
                 break;
            case 2: /* _SYS */
                 tap_code(clockwise ? KC_PGUP : KC_PGDN);

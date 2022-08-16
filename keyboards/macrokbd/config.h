@@ -34,7 +34,7 @@
 
 #define ENCODERS_PAD_A { B2, B1 }
 #define ENCODERS_PAD_B { B6, B3 }
-#define ENCODER_RESOLUTION  4
+#define ENCODER_RESOLUTION  2
 
 #define UNUSED_PINS
 

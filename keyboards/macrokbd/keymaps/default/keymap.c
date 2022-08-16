@@ -47,19 +47,19 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MEDIA] = LAYOUT(
         KC_MUTE, KC_LEFT, KC_MPLY, KC_RIGHT,
-        TO(_BROWSER), KC_MPRV, KC_MSTP, KC_MNXT
+        TO(_BROWSER), LGUI(KC_L), KC_MSTP, KC_MNXT
     ),
     [_BROWSER] =  LAYOUT(
         KC_WWW_HOME, KC_WBAK, KC_WREF, KC_WFWD,
-        TO(_SYS), KC_WSCH, KC_WSTP, KC_WFAV
+        TO(_SYS), LGUI(KC_L), KC_WSTP, KC_WFAV
     ),
     [_SYS] = LAYOUT(
         _______, LALT(KC_TAB), LSA(KC_TAB), _______,
-        TO(_MISC), KC_3, C(KC_C), C(KC_V)
+        TO(_MISC), LCA(KC_LEFT), C(KC_C), C(KC_V)
     ),
     [_MISC] = LAYOUT(
         KC_MUTE, A(KC_TAB), KC_MPLY, KC_RIGHT,
-        TO(_MEDIA), KC_ENTER, KC_MSTP, KC_MNXT
+        TO(_MEDIA), LCA(KC_LEFT), KC_MSTP, KC_MNXT
     )
 };
 
@@ -80,7 +80,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(clockwise ? KC_PGUP : KC_PGDN);
                 break;
            case 3: /* _MISC */
-                tap_code(clockwise ? KC_MNXT : KC_MPRV);
+                tap_code(clockwise ? LCA(KC_LEFT) : LCA(KC_RIGHT) );
                 break;
 	}
     }

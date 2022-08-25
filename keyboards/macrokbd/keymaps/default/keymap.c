@@ -47,19 +47,19 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MEDIA] = LAYOUT(
         KC_MUTE, KC_LEFT, KC_MPLY, KC_RIGHT,
-        TO(_BROWSER), LGUI(KC_L), KC_MSTP, KC_MNXT
+        TO(_BROWSER), LALT(KC_TAB), KC_MSTP, KC_MNXT
     ),
     [_BROWSER] =  LAYOUT(
         KC_WWW_HOME, KC_WBAK, KC_WREF, KC_WFWD,
-        TO(_SYS), LGUI(KC_L), KC_WSTP, KC_WFAV
+        TO(_SYS), KC_WSCH, KC_WSTP, KC_WFAV
     ),
     [_SYS] = LAYOUT(
         _______, LALT(KC_TAB), LSA(KC_TAB), _______,
-        TO(_MISC), LCA(KC_LEFT), C(KC_C), C(KC_V)
+        TO(_MISC), LGUI(KC_L), C(KC_C), C(KC_V)
     ),
     [_MISC] = LAYOUT(
         KC_MUTE, A(KC_TAB), KC_MPLY, KC_RIGHT,
-        TO(_MEDIA), LCA(KC_LEFT), KC_MSTP, KC_MNXT
+        TO(_MEDIA), KC_F14, KC_MSTP, KC_MNXT
     )
 };
 

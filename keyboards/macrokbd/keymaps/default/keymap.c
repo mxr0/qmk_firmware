@@ -80,7 +80,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(clockwise ? KC_PGUP : KC_PGDN);
                 break;
            case 3: /* _MISC */
-                tap_code(clockwise ? LCA(KC_LEFT) : LCA(KC_RIGHT) );
+                tap_code(clockwise ? KC_MNXT : KC_MPRV);
                 break;
 	}
     }

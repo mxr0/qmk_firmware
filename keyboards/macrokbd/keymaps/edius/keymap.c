@@ -7,7 +7,7 @@
 enum layer_name {
   _EDIUS,
   _EDIUS2,
-  _SYS,
+  _EDIUS3,
   _MISC
 };
 
@@ -36,16 +36,16 @@ void keyboard_pre_init_user(void) {
 layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
     case _EDIUS:
-      writePinHigh(LED1);
+      writePinLow(LED1);
       writePinLow(LED2);
       break;
     case _EDIUS2:
+      writePinHigh(LED1);
+      writePinLow(LED2);
+      break;
+    case _EDIUS3:
       writePinLow(LED1);
       writePinHigh(LED2);
-      break;
-    case _SYS:
-      writePinLow(LED1);
-      writePinLow(LED2);
       break;
     case _MISC:
       writePinHigh(LED1);
@@ -65,12 +65,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_G, LALT(KC_G), LCTL(KC_T), LCTL(KC_P)
     ),
     [_EDIUS2] =  LAYOUT(
-        KC_I, KC_O, LALT(KC_U), TO(_EDIUS),
+        KC_I, KC_O, LALT(KC_U), TO(_EDIUS3),
         LCTL(S(KC_S)), LCTL(KC_C), LCTL(KC_V), LCTL(KC_R)
     ),
-    [_SYS] = LAYOUT(
-        _______, _______, _______,_______,
-        _______, _______, _______,_______
+    [_EDIUS3] = LAYOUT(
+        KC_SPACE, LCTL(KC_Z), KC_C,TO(_EDIUS),
+        KC_N, KC_M, KC_COMMA, KC_DOT
     ),
     [_MISC] = LAYOUT(
         _______, _______, _______,_______,
@@ -84,36 +84,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool encoder_update_user(uint8_t index, bool clockwise) {
 /* left encoder */
     if (index == 1) {
-	switch(get_highest_layer(layer_state)){
-           case 0: /* _EDIUS*/
-                if(clockwise){
-                  if(eid>=9){
-                    eid=0;
-                  }
-                  else {
-                    eid++;
-                  }
-		  tap_code16( C(edius[eid]) );
-                } else {
-                  if(eid<=0){
-                    eid=9;
-                  }
-                  else {
-                    eid--;
-                  }
-		  tap_code16( C(edius[eid]) );
-		}
-                break;
-	   case 1: /* _BROWSER */
-                tap_code(clockwise ? KC_VOLD : KC_VOLU);
-                break;
-           case 2: /* _SYS */
-                tap_code(clockwise ? KC_PGUP : KC_PGDN);
-                break;
-           case 3: /* _MISC */
-                tap_code16(clockwise ? S(C(KC_TAB)) : C(KC_TAB));
-                /*tap_code(clockwise ? KC_MNXT : KC_MPRV);*/
-                break;
+        if(clockwise){
+          if(eid>=9){
+            eid=0;
+          }
+          else {
+            eid++;
+          }
+	  tap_code16( C(edius[eid]) );
+        } else {
+          if(eid<=0){
+            eid=9;
+          }
+          else {
+            eid--;
+          }
+	  tap_code16( C(edius[eid]) );
 	}
     }
     return true;

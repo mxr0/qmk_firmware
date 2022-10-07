@@ -5,8 +5,8 @@
 #include QMK_KEYBOARD_H
 
 enum layer_name {
-  _MEDIA,
-  _BROWSER,
+  _EDIUS,
+  _EDIUS2,
   _SYS,
   _MISC
 };
@@ -35,46 +35,46 @@ void keyboard_pre_init_user(void) {
 /* update the leds with every layer change */
 layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
-    case _MEDIA:
-      writePinLow(LED1);
-      writePinLow(LED2);
-      break;
-    case _BROWSER:
+    case _EDIUS:
       writePinHigh(LED1);
       writePinLow(LED2);
       break;
-    case _SYS:
+    case _EDIUS2:
       writePinLow(LED1);
       writePinHigh(LED2);
+      break;
+    case _SYS:
+      writePinLow(LED1);
+      writePinLow(LED2);
       break;
     case _MISC:
       writePinHigh(LED1);
       writePinHigh(LED2);
       break;
     default: // default fallback
-      writePinLow(LED1);
-      writePinLow(LED2);
+      writePinHigh(LED1);
+      writePinHigh(LED2);
       break;
     }
     return state;
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_MEDIA] = LAYOUT(
-        KC_MUTE, KC_LEFT, KC_MPLY, KC_RIGHT,
-        TO(_BROWSER), KC_MPRV, KC_MSTP, KC_MNXT
+    [_EDIUS] = LAYOUT(
+        KC_F7, KC_F8, LALT(KC_ENT), TO(_EDIUS2),
+        KC_G, LALT(KC_G), LCTL(KC_T), LCTL(KC_P)
     ),
-    [_BROWSER] =  LAYOUT(
-        KC_WWW_HOME, KC_WBAK, KC_WREF, KC_WFWD,
-        TO(_SYS), KC_WSCH, KC_WSTP, KC_WFAV
+    [_EDIUS2] =  LAYOUT(
+        KC_I, KC_O, LALT(KC_U), TO(_EDIUS),
+        LCTL(S(KC_S)), LCTL(KC_C), LCTL(KC_V), LCTL(KC_R)
     ),
     [_SYS] = LAYOUT(
-        _______, LALT(KC_TAB), LSA(KC_TAB), _______,
-        TO(_MISC), KC_3, C(KC_C), C(KC_V)
+        _______, _______, _______,_______,
+        _______, _______, _______,_______
     ),
     [_MISC] = LAYOUT(
-        KC_MUTE, A(KC_TAB), KC_MPLY, KC_RIGHT,
-        TO(_MEDIA), KC_ENTER, KC_MSTP, KC_MNXT
+        _______, _______, _______,_______,
+        _______, _______, _______,_______
     )
 };
 
@@ -83,19 +83,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
 /* left encoder */
-    if (index == 0) {
+    if (index == 1) {
 	switch(get_highest_layer(layer_state)){
-           case 0: /* _MEDIA*/
-                tap_code(clockwise ? KC_VOLD : KC_VOLU);
-                break;
-	   case 1: /* _BROWSER */
-                tap_code16(clockwise ? S(C(KC_TAB)) : C(KC_TAB));
-                break;
-           case 2: /* _SYS */
-                tap_code(clockwise ? KC_PGUP : KC_PGDN);
-                break;
-           case 3: /* _MISC */
-                /*tap_code(clockwise ? KC_MNXT : KC_MPRV);*/
+           case 0: /* _EDIUS*/
                 if(clockwise){
                   if(eid>=9){
                     eid=0;
@@ -114,13 +104,18 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 		  tap_code16( C(edius[eid]) );
 		}
                 break;
+	   case 1: /* _BROWSER */
+                tap_code(clockwise ? KC_VOLD : KC_VOLU);
+                break;
+           case 2: /* _SYS */
+                tap_code(clockwise ? KC_PGUP : KC_PGDN);
+                break;
+           case 3: /* _MISC */
+                tap_code16(clockwise ? S(C(KC_TAB)) : C(KC_TAB));
+                /*tap_code(clockwise ? KC_MNXT : KC_MPRV);*/
+                break;
 	}
     }
-/* right encoder */
-    else if (index == 1) {
-      tap_code(clockwise ? KC_PGUP : KC_PGDN);
-    }
-
     return true;
 }
 #endif

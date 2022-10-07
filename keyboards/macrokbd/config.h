@@ -9,8 +9,8 @@
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x0666
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    DPB
-#define PRODUCT         mini/rev1
+#define MANUFACTURER    RBG
+#define PRODUCT         macro_mini/rev1
 
 /* key matrix size */
 #define MATRIX_ROWS 2
